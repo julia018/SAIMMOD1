@@ -1,11 +1,15 @@
 package sample.logic;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class LemerGenerator {
 
     private Integer n;
     private Integer a;
     private Integer m;
     private Integer r0;
+    private float sum;
 
 
     public LemerGenerator(Integer n, Integer a, Integer m, Integer r0) {
@@ -15,12 +19,15 @@ public class LemerGenerator {
         this.r0 = r0;
     }
 
-    public float[] generateSequence() {
-        float[] result = new float[n];
+    public List<Float> generateSequence() {
+        sum = 0;
+        List<Float> result = new ArrayList<>();
         float prevX = r0 / (float)m;
         for(int i = 0; i < n; i++) {
-            result[i] = generateNextNumber(prevX);
-            prevX = result[i];
+            float next = generateNextNumber(prevX);
+            result.add(next);
+            prevX = next;
+            sum += next;
         }
         return result;
     }

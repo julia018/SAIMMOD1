@@ -6,8 +6,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import sample.logic.LemerGenerator;
+import sample.logic.SequenceHandler;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class Main extends Application {
 
@@ -21,9 +24,8 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
-        //launch(args);
-        LemerGenerator lg = new LemerGenerator(4, 3, 5, 1);
-        System.out.println(Arrays.toString(lg.generateSequence()));
-        System.exit(0);
+
+
+        launch(args);
     }
 }
