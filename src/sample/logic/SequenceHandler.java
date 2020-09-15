@@ -41,11 +41,11 @@ public class SequenceHandler {
         return densityList;
     }
 
-    private float countM(float sum, int n) {
+    public float countM(float sum, int n) {
         return sum / n;
     }
 
-    private float countD(ArrayList<Float> sequenceList, float M) {
+    public float countD(List<Float> sequenceList, float M) {
         float sum = 0;
         for (Float number : sequenceList) {
             sum += (number - M) * (number - M);
@@ -53,7 +53,7 @@ public class SequenceHandler {
         return sum / sequenceList.size();
     }
 
-    private float countAverageD(float D) {
+    public float countAverageD(float D) {
         return (float) Math.sqrt(D);
     }
 
