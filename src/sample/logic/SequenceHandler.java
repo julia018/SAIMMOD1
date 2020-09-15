@@ -1,11 +1,8 @@
 package sample.logic;
 
-import javafx.collections.FXCollections;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 public class SequenceHandler {
 
@@ -18,17 +15,17 @@ public class SequenceHandler {
 
     public List<Float> getDensityList(List<Float> sequence) {
         List<Float> densityList = new ArrayList<>();
-        for(int i = 0; i < INTERVAL_AMOUNT; i++) {
-            densityList.add((float)0);
+        for (int i = 0; i < INTERVAL_AMOUNT; i++) {
+            densityList.add((float) 0);
         }
         float intervalMinValue = minValue;
 
         // a <= x < b
-        for(float num: sequence) {
-            for(int i = 0; i < INTERVAL_AMOUNT; i++) {
+        for (float num : sequence) {
+            for (int i = 0; i < INTERVAL_AMOUNT; i++) {
                 float intervalStart = intervalMinValue + step * i;
                 float intervalEnd = intervalStart + step;
-                if((num >= intervalStart) && (num < intervalEnd)) {
+                if ((num >= intervalStart) && (num < intervalEnd)) {
                     float prev = densityList.get(i);
                     densityList.set(i, prev + 1);
                     break;
@@ -36,7 +33,7 @@ public class SequenceHandler {
             }
         }
 
-        for(int i = 0; i < INTERVAL_AMOUNT; i++) {
+        for (int i = 0; i < INTERVAL_AMOUNT; i++) {
             float amount = densityList.get(i);
             densityList.set(i, amount / sequence.size());
         }
@@ -50,7 +47,7 @@ public class SequenceHandler {
 
     private float countD(ArrayList<Float> sequenceList, float M) {
         float sum = 0;
-        for(Float number: sequenceList) {
+        for (Float number : sequenceList) {
             sum += (number - M) * (number - M);
         }
         return sum / sequenceList.size();
@@ -67,7 +64,7 @@ public class SequenceHandler {
     public void setSequenceSpecs(List<Float> sequence) {
         this.minValue = Collections.min(sequence);
         this.maxValue = Collections.max(sequence);
-        this.step = ( maxValue - minValue) / INTERVAL_AMOUNT;
+        this.step = (maxValue - minValue) / INTERVAL_AMOUNT;
     }
 
     public float getMinValue() {
@@ -76,5 +73,39 @@ public class SequenceHandler {
 
     public float getMaxValue() {
         return maxValue;
+    }
+
+    public double checkSequence(List<Float> sequence) {
+        int k = 0;
+        for (int i = 0; i < sequence.size(); i += 2) {
+            double sum = Math.pow(sequence.get(i), 2) + Math.pow(sequence.get(i + 1), 2);
+            if (Double.compare(sum, 1) < 0) {
+                k++;
+            }
+        }
+        return (double) 2 * k / sequence.size();
+    }
+
+    public int getPeriod(List<Float> sequence) {
+        Float xV = sequence.get(sequence.size() - 1);
+        List<Integer> matchingIndices = new ArrayList<>();
+        for (int i = 0; i < sequence.size(); i++) {
+            if (sequence.get(i).equals(xV)) {
+                matchingIndices.add(i);
+            }
+        }
+        System.out.println(matchingIndices.toString());
+        return matchingIndices.get(1) - matchingIndices.get(0);
+    }
+
+    public int getAperiodicitySegment(List<Float> sequence) {
+        int period = getPeriod(sequence);
+        for (int i = 0; i < sequence.size() - period; i++) {
+            if (sequence.get(i + period).equals(sequence.get(i))) {
+                System.out.println(i);
+                return i + period;
+            }
+        }
+        return -1;
     }
 }
