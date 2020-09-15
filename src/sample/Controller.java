@@ -64,8 +64,20 @@ public class Controller {
         SequenceHandler sh = new SequenceHandler();
         sh.setSequenceSpecs(sequence);
         List<Float> densityList = sh.getDensityList(sequence);
+        double k = sh.checkSequence(sequence);
+        System.out.println(k);
         System.out.println(Arrays.toString(sequence.toArray()));
         System.out.println(Arrays.toString(densityList.toArray()));
+
+        //check period
+        LemerGenerator lg1 = new LemerGenerator(Integer.MAX_VALUE, 3, 5, 1);
+        List<Float> sequence1 = lg.generateSequence();
+        int period = sh.getPeriod(sequence1);
+
+        //check aperiodicity segment
+        LemerGenerator lg2 = new LemerGenerator(period, 3, 5, 1);
+        List<Float> sequenceOfPeriod = lg.generateSequence();
+        sh.getAperiodicitySegment(sequence1);
 
         CategoryAxis xAxis = new CategoryAxis();
         xAxis.setLabel("Интервал");
